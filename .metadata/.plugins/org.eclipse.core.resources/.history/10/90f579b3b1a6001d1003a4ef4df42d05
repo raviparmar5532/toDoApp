@@ -1,0 +1,44 @@
+package com.example.demo.Project;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.Person.Person;
+
+@RestController
+public class projectController {
+	@Autowired
+	private ProjectService projectService;
+	@GetMapping(value = "projects")
+	public List<Project> getAllProjects() {
+		return projectService.getAllProjects();
+	}
+	@GetMapping(value = "projects/persons/{projectName}")
+	public List<Person> getPersons(@PathVariable("projectName") String projectName) {
+		return projectService.getPersons(projectName);
+	}
+	@PostMapping(value = "projects/add")
+	public String addProject(@RequestBody Project P) {
+		return projectService.addProject(P);
+	}
+	@DeleteMapping(value = "projects/delete/{id}")
+	public String deleteProject(@PathVariable("id") Integer id) {
+		return projectService.deleteProject(id);
+	}
+	@PatchMapping(value = "projects/{projectId}/add")
+	public String addPerson(@PathVariable("projectId") Integer projectId, @RequestBody Person P) {
+		return projectService.addPerson(projectId, P);
+	}
+	@PatchMapping(value = "projects/{projectId}/delete/{personId}")
+	public String removePerson(@PathVariable("projectId") Integer projectId, @PathVariable("personId") Integer personId) {
+		return projectService.removePerson(projectId, personId);
+	}
+}

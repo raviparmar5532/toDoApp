@@ -1,0 +1,119 @@
+package com.example.demo.Person;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Project.Project;
+import com.example.demo.Project.ProjectDao;
+import com.example.demo.Task.Task;
+
+@Service
+public class PersonService {
+	@Autowired
+	private PersonDao personDao;
+	@Autowired
+	private ProjectDao projectDao;
+	
+//	Retrive all Person list
+	public List<Person> getAllPerson() {
+		return personDao.findAll();
+	}
+//	Add new Person
+	public String addPerson(Person P) {
+		try {
+			personDao.save(P);
+			return "New Person Added";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	Person detail by Person id
+	public String getPersonById(Integer id) {
+		try {
+			return personDao.getReferenceById(id).toString();
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	deleting a Person by id
+	public String deleteById(Integer id) {
+		try {
+			if(personDao.existsById(id)) {
+				personDao.deleteById(id);		
+				return "Person removed";
+			}
+			else return "No Person with ID = "+id+" exists";
+		}
+		catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+//	Assigning a task to person
+	public String addTask(Integer id, Task T) {
+		try {
+			Person P = personDao.getReferenceById(id);
+			P.addTask(T);
+			personDao.save(P);
+			return "Task added";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	Listing of tasks assigned to a person
+	public List<Task> getTasks(Integer id) {
+		if(personDao.existsById(id)) {
+			return personDao.getReferenceById(id).getTasks();			
+		}else {
+			return new ArrayList<Task>();
+		}
+	}
+//	Delete task assigned to a person
+	public String deleteTask(Integer id, String name) {
+		try {
+			Person p = personDao.getReferenceById(id);
+			if(p.getTasks().removeIf(task -> (task.getName().equals(name)))) {
+				personDao.save(p);
+				return "Task named "+name+" removed";
+			}
+			return "No such tasks";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	Assign project
+	public String assignProject(Integer personId, Project project) {
+		try {
+			
+//			Person person = personDao.getReferenceById(personId);
+//			person.addProject(project);
+//			personDao.save(person);
+			return "Project added";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	Remove project	
+	public String removeProject(Integer personId, Integer projectId) {
+		try {
+			Person per = personDao.getReferenceById(personId);
+			Project pro = projectDao.getReferenceById(projectId);
+			if(!per.getProjects().contains(pro)) return "Person is not working on project"; 
+			per.removeProject(pro);
+			personDao.save(per);
+			return "Project Removed";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	Get assigned projects
+	public List<Project> getProjects(Integer personId) {
+		try {
+			return personDao.getReferenceById(personId).getProjects();
+		} catch (Exception e) {
+			return new ArrayList<>();
+		}
+	}
+}

@@ -1,0 +1,58 @@
+package com.example.demo.Task;
+
+import org.hibernate.annotations.DynamicUpdate;
+
+import com.example.demo.Person.Person;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@DynamicUpdate
+public class Task {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer taskId;
+	private String name;
+	private Boolean isPending;
+	@ManyToOne
+	@JsonIgnore
+	private Person person;
+	
+	public Integer getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Boolean getIsPending() {
+		return isPending;
+	}
+	public void setIsPending(Boolean isPending) {
+		this.isPending = isPending;
+	}
+	public void isPropertyNull() throws Exception { //checking of person is pending
+		if(name==null || isPending==null) throw new Exception("Some properties are found null");
+	}
+	@Override
+	public String toString() {
+		return "Task [taskId=" + taskId + ", name=" + name + ", isPending=" + isPending + ", person=" + person.getPersonId() + "]";
+	}
+}

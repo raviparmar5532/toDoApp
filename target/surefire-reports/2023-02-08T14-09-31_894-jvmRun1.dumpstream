@@ -1,0 +1,51 @@
+# Created at 2023-02-08T14:09:35.021
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+
+# Created at 2023-02-08T14:09:35.290
+Unexpected IOException with stream: 2023-02-08T14:09:35.290+05:30  INFO 8976 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+
+
+# Created at 2023-02-08T14:09:35.364
+Unexpected IOException with stream: 2023-02-08T14:09:35.364+05:30  INFO 8976 --- [           main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+
+
+# Created at 2023-02-08T14:09:36.106
+Unexpected IOException with stream: 2023-02-08T14:09:36.106+05:30  INFO 8976 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+
+
+# Created at 2023-02-08T14:09:36.113
+Unexpected IOException with stream: 2023-02-08T14:09:36.113+05:30  INFO 8976 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+
+
+# Created at 2023-02-08T14:09:36.527
+Unexpected IOException with stream: 2023-02-08T14:09:36.527+05:30  WARN 8976 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+
+
+# Created at 2023-02-08T14:09:36.878
+Unexpected IOException with stream: 2023-02-08T14:09:36.877+05:30  INFO 8976 --- [           main] c.example.demo.ToDoApp2ApplicationTests  : Started ToDoApp2ApplicationTests in 3.799 seconds (process running for 4.826)
+
+
+# Created at 2023-02-08T14:09:36.881
+Unexpected IOException with stream: 2023-02-08T14:09:36.880+05:30  INFO 8976 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+
+
+# Created at 2023-02-08T14:09:36.883
+Unexpected IOException with stream: 2023-02-08T14:09:36.882+05:30  INFO 8976 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+
+
+# Created at 2023-02-08T14:09:36.884
+Unexpected IOException with stream: 2023-02-08T14:09:36.883+05:30  INFO 8976 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+
+
+# Created at 2023-02-08T14:09:36.896
+Unexpected IOException with stream: 2023-02-08T14:09:36.895+05:30  INFO 8976 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+

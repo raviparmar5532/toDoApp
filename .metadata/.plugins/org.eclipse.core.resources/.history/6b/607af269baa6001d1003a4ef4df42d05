@@ -1,0 +1,68 @@
+package com.example.demo.Project;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.annotations.DynamicUpdate;
+
+import com.example.demo.Person.Person;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+@Entity @DynamicUpdate @Table(name = "project")
+public class Project {
+	@Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name = "project_id") 
+	private Integer projectId;
+	@Column(name = "project_name")
+	private String projectName;
+	@ManyToMany
+	@JoinTable(
+		name = "person_project",
+		joinColumns = @JoinColumn(name = "person_id"),
+		inverseJoinColumns =  @JoinColumn(name = "project_id")
+	)
+	private List<Person>persons;
+	public Integer getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+	public List<Person> getPersons() {
+		return this.persons;
+	}
+	public void setPersons(List<Person> persons) {
+		this.persons = persons;
+	}
+	
+	
+	
+	//	public void addPerson(Person P) {
+//		if(this.persons == null) this.persons = new ArrayList<>();
+//		this.persons.add(P);
+////		P.addProject(this);
+//	}
+//	public void removePerson(Person P) {
+//		P.getProjects().remove(this);
+//		this.persons.remove(P);
+//	}
+	@Override
+	public String toString() {
+		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", persons=" + persons.size() + "]";
+	}
+	
+}

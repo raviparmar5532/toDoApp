@@ -1,0 +1,70 @@
+package com.example.demo.Project;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Person.Person;
+import com.example.demo.Person.PersonDao;
+import com.example.demo.Person.PersonService;
+
+@Service
+public class ProjectService {
+	@Autowired
+	private ProjectDao projectDao;
+	@Autowired
+	private PersonDao personDao;
+	public String addProject(Project P) {
+		try {
+			projectDao.save(P);
+			return "Project added";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	public String deleteProject(Integer id) {
+		try {
+			if(projectDao.existsById(id)) {
+				projectDao.deleteById(id);		
+				return "Project removed";
+			}
+			else return "No Project with ID = "+id+" exists";
+		}
+		catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+	public List<Project> getAllProjects() {
+		return projectDao.findAll();
+	}
+	public List<Person> getPersons(String name) {
+		for(Project p : this.getAllProjects()) {
+			if(p.getProjectName().equals(name)) {
+				return p.getPersons();
+			}
+		}
+		return new ArrayList<>();
+	}
+	public String removePerson(Integer projectId, Integer personId) {
+		try {
+			personService.removeProject(personId, projectId);
+			return "Person Removed";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	public String addPerson(Integer projectId, Person Per) {
+		try {
+			
+			Project pro = projectDao.getReferenceById(projectId);
+			pro.addPerson(Per);
+			personService.addPerson(Per);
+			this.addProject(pro);
+			return "Person added";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+}

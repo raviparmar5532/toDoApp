@@ -1,0 +1,9 @@
+package com.example.demo.Project;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface ProjectDao extends JpaRepository<Project, Integer>{
+//	@Query("FROM PROJECT WHERE projectName = ?1")
+//	public Project findByName(String name);
+}

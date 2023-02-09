@@ -1,0 +1,67 @@
+package com.example.demo.Task;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TaskService {
+	@Autowired
+	private TaskDAO taskDao;
+	
+//	Retrieve all task list
+	public List<Task> getAllTask() {
+		return taskDao.findAll();
+	}
+//	Add new task
+	public String addTask(Task T) {
+		try {
+			taskDao.save(T);
+			return "New Task Created";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	task detail by task id
+	public String gettaskById(Integer id) {
+		try {
+			return taskDao.getReferenceById(id).toString();			
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+//	updating a task as a whole (PUT request)
+	public String updateTask(Task T) {
+		try {
+			Integer id = 
+			if(taskDao.existsById(id)) {
+				taskDao.save(T);
+				return "Task Updated";
+			}			
+			else return "No Task with ID = "+id+" exists";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	
+//	deleting a task by id
+	public String deleteById(Integer id) {
+		try {
+			if(taskDao.existsById(id)) {
+				taskDao.deleteById(id);		
+				return "Task Deleted";
+			}
+			else return "No Task with ID = "+id+" exists";
+		}
+		catch(Exception e) {
+			return e.getMessage();
+		}
+	}
+	
+/*
+ *  	Person Methods
+ */
+	
+//	
+}

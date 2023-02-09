@@ -22,5 +22,5 @@ public class PersonDto {
 	}
 	public void setPersonName(String personName) {
 		this.personName = personName;
-	}	
+	}
 }

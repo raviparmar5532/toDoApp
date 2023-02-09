@@ -12,4 +12,5 @@ public interface ProjectService {
 	public List<PersonDto> getPersons(String name) ;
 	public String removePerson(Integer projectId, Integer personId) ;
 	public String addPerson(Integer projectId, PersonDto per) ;
+	public String addPersonQuery(Integer projectId, PersonDto per) ;
 }

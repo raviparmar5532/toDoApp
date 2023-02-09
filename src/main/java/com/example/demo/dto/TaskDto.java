@@ -1,9 +1,12 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //@Data
 public class TaskDto {
 	private Integer taskId;
 	private String taskName;
+	@JsonIgnore
 	private PersonDto person;
 	public Integer getTaskId() {
 		return taskId;

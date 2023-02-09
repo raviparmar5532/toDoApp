@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dao.PersonDao;
 import com.example.demo.dao.ProjectDao;
@@ -16,6 +17,7 @@ import com.example.demo.mapper.MapstructMapper;
 import com.example.demo.model.Person;
 import com.example.demo.model.Project;
 import com.example.demo.service.PersonService;
+
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -31,6 +33,7 @@ public class PersonServiceImpl implements PersonService {
 		return personDao.findAll().stream().map(p -> mp.personToPersonDto(p)).collect(Collectors.toList());
 	}
 //	Add new Person
+	@Transactional
 	public String addPerson(PersonDto p) {
 		try {
 			personDao.save(mp.personDtoToPerson(p));
@@ -40,14 +43,21 @@ public class PersonServiceImpl implements PersonService {
 		}
 	}
 //	Person detail by Person id
-	public String getPersonById(Integer id) {
+	public Object getPersonById(Integer id) {
+//		Map<String, Object>map = new HashMap<>();
 		try {
-			return personDao.getReferenceById(id).toString();
+			Person p = personDao.getReferenceById(id);
+			return mp.personToPersonDto(p);
+//			map.put("Response", mp.personToPersonDto(p));
+//			return map;
 		} catch (Exception e) {
 			return e.getMessage();
+//			map.put("Error", e.getMessage());
+//			return map;
 		}
 	}
 //	deleting a Person by id
+	@Transactional
 	public String deleteById(Integer id) {
 		try {
 			if(personDao.existsById(id)) {
@@ -61,6 +71,7 @@ public class PersonServiceImpl implements PersonService {
 		}
 	}
 //	Assigning a task to person
+	@Transactional
 	public String addTask(Integer id, TaskDto t) {
 		try {
 			Person p = personDao.getReferenceById(id);
@@ -80,6 +91,7 @@ public class PersonServiceImpl implements PersonService {
 		}
 	}
 //	Assign project
+	@Transactional
 	public String assignProject(Integer personId, ProjectDto pdto) {
 		try {
 			Person person = personDao.getReferenceById(personId);
@@ -93,6 +105,7 @@ public class PersonServiceImpl implements PersonService {
 		}
 	}
 //	Remove project	
+	@Transactional
 	public String removeProject(Integer personId, Integer projectId) {
 		try {
 			Person per = personDao.getReferenceById(personId);

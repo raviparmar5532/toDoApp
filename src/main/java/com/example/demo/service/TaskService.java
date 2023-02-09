@@ -11,7 +11,7 @@ public interface TaskService {
 //	Add new task
 	public String addTask(TaskDto t) ;
 //	task detail by task id
-	public String gettaskById(Integer id) ;
+	public Object gettaskById(Integer id) ;
 	
 //	deleting a task by id
 	public String deleteById(Integer id) ;

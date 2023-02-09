@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dao.PersonDao;
 import com.example.demo.dao.ProjectDao;
@@ -15,6 +16,7 @@ import com.example.demo.mapper.MapstructMapper;
 import com.example.demo.model.Person;
 import com.example.demo.model.Project;
 import com.example.demo.service.ProjectService;
+
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -26,6 +28,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private PersonServiceImpl personService;
 	@Autowired
 	private MapstructMapper mp;
+	
+	@Transactional
 	public String addProject(ProjectDto p) {
 		try {
 			projectDao.save(mp.projectDtoToProject(p));
@@ -34,6 +38,7 @@ public class ProjectServiceImpl implements ProjectService {
 			return e.getMessage();
 		}
 	}
+	@Transactional
 	public String deleteProject(Integer id) {
 		try {
 			if(projectDao.existsById(id)) {
@@ -49,6 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<ProjectDto> getAllProjects() {
 		return projectDao.findAll().stream().map(pro -> mp.projectToProjectDto(pro)).collect(Collectors.toList());
 	}
+	
 	public List<PersonDto> getPersons(String name) {
 		for(Project p : projectDao.findAll()) {
 			if(p.getProjectName().equals(name)) {
@@ -57,7 +63,8 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		return new ArrayList<>();
 	}
-	public String addPerson(Integer projectId, PersonDto per) {
+	@Transactional
+	public String addPersonQuery(Integer projectId, PersonDto per) {
 		try {
 			Person person = mp.personDtoToPerson(per);
 			Integer personId = personDao.save(person).getPersonId();
@@ -67,6 +74,7 @@ public class ProjectServiceImpl implements ProjectService {
 			return e.getMessage();
 		}
 	}
+	@Transactional
 	public String removePerson(Integer projectId, Integer personId) {
 		try {
 			personService.removeProject(personId, projectId);
@@ -74,5 +82,11 @@ public class ProjectServiceImpl implements ProjectService {
 		} catch (Exception e) {
 			return e.getMessage();
 		}
+	}
+	@Override
+	public String addPerson(Integer projectId, PersonDto per) {
+		Integer personId = personDao.save(mp.personDtoToPerson(per)).getPersonId();
+		projectDao.addPersonQuery(projectId, personId);
+		return "Person Added";
 	}
 }

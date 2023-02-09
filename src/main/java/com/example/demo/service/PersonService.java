@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.demo.dto.PersonDto;
 import com.example.demo.dto.ProjectDto;
@@ -13,7 +14,7 @@ public interface PersonService {
 //	Add new Person
 	public String addPerson(PersonDto p) ;
 //	Person detail by Person id
-	public String getPersonById(Integer id) ;
+	public Object getPersonById(Integer id) ;
 //	deleting a Person by id
 	public String deleteById(Integer id) ;
 //	Assigning a task to person

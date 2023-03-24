@@ -63,16 +63,12 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		return new ArrayList<>();
 	}
+	
 	@Transactional
-	public String addPersonQuery(Integer projectId, PersonDto per) {
-		try {
-			Person person = mp.personDtoToPerson(per);
-			Integer personId = personDao.save(person).getPersonId();
-			personService.assignProject(personId, mp.projectToProjectDto(projectDao.getReferenceById(projectId)));
-			return "Person added";
-		} catch (Exception e) {
-			return e.getMessage();
-		}
+	public String addPerson(Integer projectId, PersonDto per) {
+		Integer personId = personDao.save(mp.personDtoToPerson(per)).getPersonId();
+		projectDao.addPerson(projectId, personId);
+		return "Person Added";
 	}
 	@Transactional
 	public String removePerson(Integer projectId, Integer personId) {
@@ -82,11 +78,5 @@ public class ProjectServiceImpl implements ProjectService {
 		} catch (Exception e) {
 			return e.getMessage();
 		}
-	}
-	@Override
-	public String addPerson(Integer projectId, PersonDto per) {
-		Integer personId = personDao.save(mp.personDtoToPerson(per)).getPersonId();
-		projectDao.addPersonQuery(projectId, personId);
-		return "Person Added";
 	}
 }

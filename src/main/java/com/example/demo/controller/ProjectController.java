@@ -49,13 +49,6 @@ public class ProjectController {
 		return new ResponseEntity<>(mp, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "projects/{projectId}/persons")
-	public ResponseEntity<Map<String, String>> addPerson(@PathVariable("projectId") Integer projectId, @RequestBody PersonDto p) {
-		Map<String, String>mp = new HashMap<>();
-		mp.put("Response", projectService.addPerson(projectId, p));
-		return new ResponseEntity<>(mp, HttpStatus.OK);
-	}
-	
 	@DeleteMapping(value = "projects/{projectId}/persons/{personId}")
 	public ResponseEntity<Map<String, String>> removePerson(@PathVariable("projectId") Integer projectId, @PathVariable("personId") Integer personId) {
 		Map<String, String>mp = new HashMap<>();

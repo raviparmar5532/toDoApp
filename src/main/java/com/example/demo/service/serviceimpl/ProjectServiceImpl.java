@@ -79,4 +79,11 @@ public class ProjectServiceImpl implements ProjectService {
 			return e.getMessage();
 		}
 	}
+	@Override
+	@Transactional
+	public String addPerson(Integer projectId, PersonDto per) {
+		Integer personId = personDao.save(mp.personDtoToPerson(per)).getPersonId();
+		projectDao.addPerson(projectId, personId);
+		return "Person Added";
+	}
 }
